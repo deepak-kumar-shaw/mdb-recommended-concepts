@@ -86,6 +86,11 @@
                 column: {
                     type: Object,
                     value: {}
+                },
+
+                isButtonClicked: {
+                    type: Boolean,
+                    value: false
                 }
             },
 
@@ -93,8 +98,14 @@
                 '_conceptUpdated(concept.assessment)'
             ],
 
+            listeners: {
+                'recommendation-changed-Top': '_recommendationChangedTop'
+            }
+            ,
+
             _conceptUpdated: function () {
                 if (this.concept && this.column) {
+                    this.column.assessment = this.concept.assessment;
                     switch (this.concept.assessment) {
                         case 'Y':
                             this.concept.relevance = 100;
@@ -106,13 +117,25 @@
                             this.concept.relevance = this._initialRelevance;
                             break;
                     }
-
+                    if (this.isButtonClicked) {
+                        this.isButtonClicked = false;
                     this.fire('recommendation-changed', {
                         concept: this.concept,
                         column: this.column
                     });
                 }
-            },
+                }
+            }
+            ,
+
+            _recommendationChangedTop: function () {
+                this.isButtonClicked = true;
+//                var that = this;
+//                this._conceptUpdated;
+                /*setTimeout(function () {
+                 }, 0)*/
+            }
+            ,
 
             _getConceptRelevance: function () {
                 return this.concept && this.concept.relevance || 0;
