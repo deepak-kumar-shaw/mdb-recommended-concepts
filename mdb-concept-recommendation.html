@@ -88,7 +88,7 @@
                     value: {}
                 },
 
-                isButtonClicked: {
+                _isButtonClicked: {
                     type: Boolean,
                     value: false
                 }
@@ -117,8 +117,8 @@
                             this.concept.relevance = this._initialRelevance;
                             break;
                     }
-                    if (this.isButtonClicked) {
-                        this.isButtonClicked = false;
+                    if (this._isButtonClicked) {
+                        this._isButtonClicked = false;
                     this.fire('recommendation-changed', {
                         concept: this.concept,
                         column: this.column
@@ -129,11 +129,7 @@
             ,
 
             _recommendationChangedTop: function () {
-                this.isButtonClicked = true;
-//                var that = this;
-//                this._conceptUpdated;
-                /*setTimeout(function () {
-                 }, 0)*/
+                this._isButtonClicked = true;
             }
             ,
 
